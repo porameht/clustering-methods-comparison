@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clustering Methods Comparison</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 1200px;
+            margin: 20px auto;
+            font-family: Arial, sans-serif;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+    <table id="clusteringTable"></table>
+
+    <script>
+        const data = [
+            {
+                method: "Word Embeddings + K-Means",
+                responseTime: "Fast",
+                accuracy: "Good",
+                strengths: "Fast and scalable, Captures general semantic relationships",
+                weaknesses: "Struggles with non-spherical clusters, Sensitive to outliers",
+                bestUseCase: "Large datasets with clear, spherical clusters"
+            },
+            {
+                method: "BERT Embeddings + Hierarchical Clustering",
+                responseTime: "Slow",
+                accuracy: "Excellent",
+                strengths: "Captures nuanced, context-aware meanings, Flexible number of clusters",
+                weaknesses: "Computationally expensive, Can be sensitive to noise",
+                bestUseCase: "When high accuracy and context-awareness are crucial"
+            },
+            {
+                method: "LDA (Topic Modeling)",
+                responseTime: "Moderate",
+                accuracy: "Good for topics",
+                strengths: "Uncovers latent themes, Interpretable results",
+                weaknesses: "May not capture fine-grained relationships, Requires pre-defining number of topics",
+                bestUseCase: "Discovering abstract topics in large text corpora"
+            },
+            {
+                method: "KNN (K-Nearest Neighbors)",
+                responseTime: "Moderate",
+                accuracy: "Good",
+                strengths: "Simple and intuitive, Works well with well-separated clusters",
+                weaknesses: "Sensitive to the scale of features, Can be computationally expensive for large datasets",
+                bestUseCase: "When clusters are well-separated and of similar density"
+            },
+            {
+                method: "SOM (Self-Organizing Maps)",
+                responseTime: "Moderate",
+                accuracy: "Good",
+                strengths: "Good for visualization, Preserves topological properties",
+                weaknesses: "Can be sensitive to initialization, Requires specifying map size",
+                bestUseCase: "Visualizing high-dimensional data and preserving relationships"
+            },
+            {
+                method: "GMM (Gaussian Mixture Models)",
+                responseTime: "Moderate",
+                accuracy: "Excellent (for Gaussian data)",
+                strengths: "Flexible cluster shapes, Provides probability of cluster membership",
+                weaknesses: "Assumes Gaussian distribution, Sensitive to initialization",
+                bestUseCase: "When data follows Gaussian distribution and probabilistic assignments are needed"
+            },
+            {
+                method: "DBSCAN",
+                responseTime: "Can be slow for large datasets",
+                accuracy: "Excellent",
+                strengths: "Handles noise well, Discovers clusters of arbitrary shape",
+                weaknesses: "Sensitive to parameters, Can struggle with varying densities",
+                bestUseCase: "Datasets with noise and non-globular clusters"
+            }
+        ];
+
+        function createTable() {
+            const table = document.getElementById('clusteringTable');
+            const headers = ['Method', 'Response Time', 'Accuracy', 'Strengths', 'Weaknesses', 'Best Use Case'];
+            
+            // Create table header
+            let headerRow = table.createTHead().insertRow();
+            headers.forEach(headerText => {
+                let th = document.createElement('th');
+                th.textContent = headerText;
+                headerRow.appendChild(th);
+            });
+
+            // Create table body
+            let tbody = table.createTBody();
+            data.forEach(item => {
+                let row = tbody.insertRow();
+                Object.values(item).forEach(text => {
+                    let cell = row.insertCell();
+                    cell.textContent = text;
+                });
+            });
+        }
+
+        // Call the function to create the table when the page loads
+        window.onload = createTable;
+    </script>
+</body>
+</html>
