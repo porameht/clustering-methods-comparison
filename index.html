@@ -1,122 +1,452 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clustering Methods Comparison</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data Analysis and Machine Learning Methods</title>
     <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f0f0f0;
+      }
+      h1 {
+        text-align: center;
+        color: #2c3e50;
+        margin-bottom: 30px;
+      }
+      h2 {
+        color: #2980b9;
+        border-bottom: 2px solid #2980b9;
+        padding-bottom: 10px;
+      }
+      .category-description {
+        background-color: #ecf0f1;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 20px 0;
+        background-color: #fff;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      }
+      th,
+      td {
+        border: 1px solid #bdc3c7;
+        padding: 12px;
+        text-align: left;
+      }
+      th {
+        background-color: #3498db;
+        color: white;
+        font-weight: bold;
+      }
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      tr:hover {
+        background-color: #e0e0e0;
+      }
+      @media (max-width: 768px) {
         table {
-            border-collapse: collapse;
-            width: 100%;
-            max-width: 1200px;
-            margin: 20px auto;
-            font-family: Arial, sans-serif;
+          font-size: 14px;
         }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
+        th,
+        td {
+          padding: 8px;
         }
-        th {
-            background-color: #f2f2f2;
-            font-weight: bold;
-        }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        tr:hover {
-            background-color: #f5f5f5;
-        }
+      }
     </style>
-</head>
-<body>
-    <table id="clusteringTable"></table>
+  </head>
+  <body>
+    <h1>Data Analysis and Machine Learning Methods</h1>
+
+    <div id="methodCategories"></div>
 
     <script>
-        const data = [
+      const categories = [
+        {
+          name: "Clustering Methods",
+          description:
+            "Clustering methods are unsupervised learning techniques used to group similar data points together based on their characteristics. These methods are particularly useful for discovering patterns and structures in data without predefined labels.",
+          tableId: "clusteringTable",
+          data: [
             {
-                method: "Word Embeddings + K-Means",
-                responseTime: "Fast",
-                accuracy: "Good",
-                strengths: "Fast and scalable, Captures general semantic relationships",
-                weaknesses: "Struggles with non-spherical clusters, Sensitive to outliers",
-                bestUseCase: "Large datasets with clear, spherical clusters"
+              method: "Word Embeddings + K-Means",
+              responseTime: "Fast",
+              accuracy: "Good",
+              strengths:
+                "Fast and scalable, Captures general semantic relationships",
+              weaknesses:
+                "Struggles with non-spherical clusters, Sensitive to outliers",
+              productApplication:
+                "E-commerce product categorization for large inventories",
             },
             {
-                method: "BERT Embeddings + Hierarchical Clustering",
-                responseTime: "Slow",
-                accuracy: "Excellent",
-                strengths: "Captures nuanced, context-aware meanings, Flexible number of clusters",
-                weaknesses: "Computationally expensive, Can be sensitive to noise",
-                bestUseCase: "When high accuracy and context-awareness are crucial"
+              method: "BERT Embeddings + Hierarchical Clustering",
+              responseTime: "Slow",
+              accuracy: "Excellent",
+              strengths:
+                "Captures nuanced, context-aware meanings, Flexible number of clusters",
+              weaknesses:
+                "Computationally expensive, Can be sensitive to noise",
+              productApplication:
+                "Sentiment analysis in social media monitoring tools",
             },
             {
-                method: "LDA (Topic Modeling)",
-                responseTime: "Moderate",
-                accuracy: "Good for topics",
-                strengths: "Uncovers latent themes, Interpretable results",
-                weaknesses: "May not capture fine-grained relationships, Requires pre-defining number of topics",
-                bestUseCase: "Discovering abstract topics in large text corpora"
+              method: "LDA (Topic Modeling)",
+              responseTime: "Moderate",
+              accuracy: "Good for topics",
+              strengths: "Uncovers latent themes, Interpretable results",
+              weaknesses:
+                "May not capture fine-grained relationships, Requires pre-defining number of topics",
+              productApplication:
+                "Content recommendation systems for news websites",
             },
             {
-                method: "KNN (K-Nearest Neighbors)",
-                responseTime: "Moderate",
-                accuracy: "Good",
-                strengths: "Simple and intuitive, Works well with well-separated clusters",
-                weaknesses: "Sensitive to the scale of features, Can be computationally expensive for large datasets",
-                bestUseCase: "When clusters are well-separated and of similar density"
+              method: "KNN (K-Nearest Neighbors)",
+              responseTime: "Moderate",
+              accuracy: "Good",
+              strengths:
+                "Simple and intuitive, Works well with well-separated clusters",
+              weaknesses:
+                "Sensitive to the scale of features, Can be computationally expensive for large datasets",
+              productApplication: "Music recommendation in streaming services",
             },
             {
-                method: "SOM (Self-Organizing Maps)",
-                responseTime: "Moderate",
-                accuracy: "Good",
-                strengths: "Good for visualization, Preserves topological properties",
-                weaknesses: "Can be sensitive to initialization, Requires specifying map size",
-                bestUseCase: "Visualizing high-dimensional data and preserving relationships"
+              method: "SOM (Self-Organizing Maps)",
+              responseTime: "Moderate",
+              accuracy: "Good",
+              strengths:
+                "Good for visualization, Preserves topological properties",
+              weaknesses:
+                "Can be sensitive to initialization, Requires specifying map size",
+              productApplication:
+                "Customer segmentation for targeted marketing campaigns",
             },
             {
-                method: "GMM (Gaussian Mixture Models)",
-                responseTime: "Moderate",
-                accuracy: "Excellent (for Gaussian data)",
-                strengths: "Flexible cluster shapes, Provides probability of cluster membership",
-                weaknesses: "Assumes Gaussian distribution, Sensitive to initialization",
-                bestUseCase: "When data follows Gaussian distribution and probabilistic assignments are needed"
+              method: "GMM (Gaussian Mixture Models)",
+              responseTime: "Moderate",
+              accuracy: "Excellent (for Gaussian data)",
+              strengths:
+                "Flexible cluster shapes, Provides probability of cluster membership",
+              weaknesses:
+                "Assumes Gaussian distribution, Sensitive to initialization",
+              productApplication:
+                "Anomaly detection in financial fraud prevention systems",
             },
             {
-                method: "DBSCAN",
-                responseTime: "Can be slow for large datasets",
-                accuracy: "Excellent",
-                strengths: "Handles noise well, Discovers clusters of arbitrary shape",
-                weaknesses: "Sensitive to parameters, Can struggle with varying densities",
-                bestUseCase: "Datasets with noise and non-globular clusters"
-            }
+              method: "DBSCAN",
+              responseTime: "Can be slow for large datasets",
+              accuracy: "Excellent",
+              strengths:
+                "Handles noise well, Discovers clusters of arbitrary shape",
+              weaknesses:
+                "Sensitive to parameters, Can struggle with varying densities",
+              productApplication:
+                "Geographic clustering for location-based services",
+            },
+          ],
+        },
+        {
+          name: "Traditional Machine Learning Methods",
+          description:
+            "Traditional machine learning methods encompass a wide range of algorithms used for various tasks such as classification, regression, and dimensionality reduction. These methods often rely on feature engineering and are effective for many types of structured data.",
+          tableId: "mlTable",
+          data: [
+            {
+              method: "Random Forest",
+              responseTime: "Fast",
+              accuracy: "Excellent",
+              strengths:
+                "Handles large datasets, Resistant to overfitting, Feature importance",
+              weaknesses:
+                "Can be computationally intensive, Less interpretable than single decision trees",
+              productApplication: "Predictive maintenance in manufacturing",
+            },
+            {
+              method: "Support Vector Machines (SVM)",
+              responseTime: "Moderate",
+              accuracy: "Good",
+              strengths:
+                "Effective in high-dimensional spaces, Versatile kernel functions",
+              weaknesses:
+                "Not suitable for large datasets, Sensitive to feature scaling",
+              productApplication: "Text classification for spam detection",
+            },
+            {
+              method: "Principal Component Analysis (PCA)",
+              responseTime: "Fast",
+              accuracy: "N/A (Dimensionality reduction)",
+              strengths:
+                "Reduces dimensionality, Identifies important features",
+              weaknesses:
+                "May lose some information, Assumes linear relationships",
+              productApplication:
+                "Feature extraction in facial recognition systems",
+            },
+            {
+              method: "Gradient Boosting",
+              responseTime: "Moderate",
+              accuracy: "Excellent",
+              strengths: "High performance, Handles different types of data",
+              weaknesses:
+                "Can overfit if not tuned properly, Computationally intensive",
+              productApplication:
+                "Click-through rate prediction in online advertising",
+            },
+            {
+              method: "XGBoost",
+              responseTime: "Fast",
+              accuracy: "Excellent",
+              strengths: "High performance, Handles imbalanced datasets well",
+              weaknesses: "Can overfit, Requires careful tuning",
+              productApplication: "Credit scoring in financial institutions",
+            },
+            {
+              method: "Naive Bayes",
+              responseTime: "Very Fast",
+              accuracy: "Good for certain types of problems",
+              strengths:
+                "Simple and fast, Works well with high dimensional data",
+              weaknesses:
+                "Assumes feature independence, May underperform for some datasets",
+              productApplication: "Email spam filtering",
+            },
+            {
+              method: "Decision Trees",
+              responseTime: "Fast",
+              accuracy: "Good",
+              strengths:
+                "Easily interpretable, Handles both numerical and categorical data",
+              weaknesses: "Prone to overfitting, Can be unstable",
+              productApplication:
+                "Customer churn prediction in telecommunications",
+            },
+            {
+              method: "Logistic Regression",
+              responseTime: "Fast",
+              accuracy: "Good for linearly separable data",
+              strengths:
+                "Simple and interpretable, Provides probability estimates",
+              weaknesses:
+                "Assumes linear relationship, Limited to binary or multinomial classification",
+              productApplication: "Credit risk assessment in banking",
+            },
+            {
+              method: "Linear Regression",
+              responseTime: "Very Fast",
+              accuracy: "Good for linear relationships",
+              strengths:
+                "Simple and interpretable, Fast to train and predict",
+              weaknesses:
+                "Assumes linear relationship, Sensitive to outliers",
+              productApplication: "House price prediction in real estate",
+            },
+          ],
+        },
+        {
+          name: "Deep Learning Methods",
+          description:
+            "Deep learning methods are a subset of machine learning based on artificial neural networks with multiple layers. These methods excel at automatically learning hierarchical representations of data and are particularly powerful for complex tasks involving unstructured data like images, text, and speech.",
+          tableId: "deepLearningTable",
+          data: [
+            {
+              method: "Neural Networks",
+              responseTime: "Slow (training), Fast (inference)",
+              accuracy: "Excellent (with sufficient data)",
+              strengths:
+                "Can model complex non-linear relationships, Versatile",
+              weaknesses: "Requires large amounts of data, Black box nature",
+              productApplication: "Image recognition in autonomous vehicles",
+            },
+            {
+              method: "Convolutional Neural Networks (CNN)",
+              responseTime: "Slow (training), Fast (inference)",
+              accuracy: "Excellent for image data",
+              strengths:
+                "Excellent for image and spatial data, Automatic feature extraction",
+              weaknesses:
+                "Requires large amounts of data, Computationally intensive",
+              productApplication: "Image classification in medical diagnostics",
+            },
+            {
+              method: "Recurrent Neural Networks (RNN)",
+              responseTime: "Moderate to Slow",
+              accuracy: "Good for sequential data",
+              strengths:
+                "Handles sequential data well, Can process variable length input",
+              weaknesses:
+                "Difficulty with long-term dependencies, Vanishing gradient problem",
+              productApplication: "Natural language processing for chatbots",
+            },
+            {
+              method: "Long Short-Term Memory (LSTM)",
+              responseTime: "Moderate to Slow",
+              accuracy: "Excellent for long sequences",
+              strengths:
+                "Solves vanishing gradient problem, Good for long-term dependencies",
+              weaknesses: "Complex architecture, Computationally intensive",
+              productApplication:
+                "Stock market prediction based on historical data",
+            },
+            {
+              method: "Transformer",
+              responseTime: "Moderate (with proper hardware)",
+              accuracy: "State-of-the-art for many NLP tasks",
+              strengths:
+                "Handles long-range dependencies, Highly parallelizable",
+              weaknesses:
+                "Requires large amounts of data, Computationally expensive to train",
+              productApplication:
+                "Large language models for content generation and analysis",
+            },
+            {
+              method: "Generative Adversarial Networks (GAN)",
+              responseTime: "Slow (training), Fast (generation)",
+              accuracy: "Varies (generative task)",
+              strengths:
+                "Can generate new, realistic data, Learns complex distributions",
+              weaknesses: "Difficult to train, Mode collapse issues",
+              productApplication:
+                "Creating synthetic data for augmenting training sets",
+            },
+            {
+              method: "Autoencoders",
+              responseTime: "Moderate",
+              accuracy: "Varies (unsupervised learning)",
+              strengths:
+                "Useful for dimensionality reduction, Anomaly detection",
+              weaknesses:
+                "Can be challenging to train, May learn trivial solutions",
+              productApplication: "Noise reduction in image processing",
+            },
+          ],
+        },
+        {
+          name: "Recommendation and Personalization Methods",
+          description:
+            "Recommendation and personalization methods are designed to predict user preferences and provide tailored suggestions. These techniques are widely used in e-commerce, content streaming platforms, and social media to enhance user experience and increase engagement by offering personalized content or product recommendations.",
+          tableId: "recommendationTable",
+          data: [
+            {
+              method: "Collaborative Filtering",
+              responseTime: "Fast to Moderate",
+              accuracy: "Good",
+              strengths:
+                "Works well with sparse data, Can capture complex user-item interactions",
+              weaknesses:
+                "Cold start problem, Scalability issues for very large datasets",
+              productApplication:
+                "Movie recommendations on streaming platforms",
+            },
+            {
+              method: "Content-Based Filtering",
+              responseTime: "Fast",
+              accuracy: "Good for niche interests",
+              strengths:
+                "No cold start problem for new items, Can provide explanations for recommendations",
+              weaknesses:
+                "Limited ability to expand user's interests, Requires good item metadata",
+              productApplication:
+                "News article recommendations based on reading history",
+            },
+            {
+              method: "Matrix Factorization",
+              responseTime: "Moderate (training), Fast (inference)",
+              accuracy: "Excellent",
+              strengths:
+                "Scalable, Can handle large sparse datasets, Captures latent features",
+              weaknesses:
+                "Cold start problem, Doesn't utilize item metadata directly",
+              productApplication: "Product recommendations in e-commerce",
+            },
+            {
+              method: "Deep Learning-based Recommenders",
+              responseTime: "Slow (training), Fast (inference)",
+              accuracy: "Excellent",
+              strengths:
+                "Can capture complex patterns, Integrates multiple data types",
+              weaknesses:
+                "Requires large amounts of data, Complex to implement and tune",
+              productApplication:
+                "Personalized feed ranking in social media platforms",
+            },
+            {
+              method: "Hybrid Recommender Systems",
+              responseTime: "Varies",
+              accuracy: "Excellent",
+              strengths:
+                "Combines strengths of multiple approaches, Mitigates weaknesses of individual methods",
+              weaknesses:
+                "Can be complex to implement and maintain, May require more computational resources",
+              productApplication:
+                "Personalized music playlists in streaming services",
+            },
+            {
+              method: "Two-Tower Model",
+              responseTime: "Fast (inference), Moderate (training)",
+              accuracy: "Excellent",
+              strengths:
+                "Efficient for large-scale retrieval, Handles user and item features separately, Allows for real-time personalization",
+              weaknesses:
+                "Requires careful feature engineering, May not capture complex cross-feature interactions",
+              productApplication:
+                "Large-scale item retrieval in search engines and recommendation systems",
+            },
+          ],
+        },
+      ];
+
+      function createMethodSection(category) {
+        const section = document.createElement("section");
+        section.innerHTML = `
+                <h2>${category.name}</h2>
+                <p class="category-description">${category.description}</p>
+                <table id="${category.tableId}"></table>
+            `;
+        document.getElementById("methodCategories").appendChild(section);
+        createTable(category.tableId, category.data);
+      }
+
+      function createTable(tableId, data) {
+        const table = document.getElementById(tableId);
+        const headers = [
+          "Method",
+          "Response Time",
+          "Accuracy",
+          "Strengths",
+          "Weaknesses",
+          "Product Application",
         ];
 
-        function createTable() {
-            const table = document.getElementById('clusteringTable');
-            const headers = ['Method', 'Response Time', 'Accuracy', 'Strengths', 'Weaknesses', 'Best Use Case'];
-            
-            // Create table header
-            let headerRow = table.createTHead().insertRow();
-            headers.forEach(headerText => {
-                let th = document.createElement('th');
-                th.textContent = headerText;
-                headerRow.appendChild(th);
-            });
+        let headerRow = table.createTHead().insertRow();
+        headers.forEach((headerText) => {
+          let th = document.createElement("th");
+          th.textContent = headerText;
+          headerRow.appendChild(th);
+        });
 
-            // Create table body
-            let tbody = table.createTBody();
-            data.forEach(item => {
-                let row = tbody.insertRow();
-                Object.values(item).forEach(text => {
-                    let cell = row.insertCell();
-                    cell.textContent = text;
-                });
-            });
-        }
+        let tbody = table.createTBody();
+        data.forEach((item) => {
+          let row = tbody.insertRow();
+          Object.values(item).forEach((text) => {
+            let cell = row.insertCell();
+            cell.textContent = text;
+          });
+        });
+      }
 
-        // Call the function to create the table when the page loads
-        window.onload = createTable;
+      window.onload = function () {
+        categories.forEach(createMethodSection);
+      };
     </script>
-</body>
+  </body>
 </html>
